@@ -9,10 +9,41 @@ def add_expense(name, amount, category):
     }
     expenses.append(expense)
     return expense
-add_expense("Rice", 50, "Food")
-add_expense("Bus",20,"Travel")
-print(expenses)
 
-with open("expenses.json","w")as f:
-    json.dump(expenses, f)
-print("Saved.")
+def load_expenses():
+    try:
+        with open("expenses.json", "r") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return []
+
+def show_summary():
+    if len(expenses) == 0:
+        print("No expenses yet.")
+        return
+    print("\n--- Expenses ---")
+    for e in expenses:
+        print(f"{e['category']}: {e['name']} - Rs.{e['amount']}")
+    print("----------------")
+
+expenses = load_expenses()
+
+while True:
+    print("\n1. Add expense")
+    print("2. View expenses")
+    print("3. Quit")
+    choice = input("Choose: ")
+
+    if choice == "1":
+        name = input("Name: ")
+        amount = input("Amount: ")
+        category = input("Category: ")
+        add_expense(name, float(amount), category)
+        print("Added.")
+
+        with open("expenses.json","w") as f:
+            json.dump(expenses, f)
+    elif choice == "2":
+        show_summary()
+    elif choice == "3":
+        break
