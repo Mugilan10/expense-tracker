@@ -26,6 +26,12 @@ def show_summary():
         print(f"{e['category']}: {e['name']} - Rs.{e['amount']}")
     print("----------------")
 
+def show_total():
+    total = 0
+    for x in expenses:
+        total += x["amount"]
+    print(f"Total spending: Rs.{total}")
+
 expenses = load_expenses()
 
 while True:
@@ -43,7 +49,10 @@ while True:
 
         with open("expenses.json","w") as f:
             json.dump(expenses, f)
+    
     elif choice == "2":
         show_summary()
+        show_total()
+
     elif choice == "3":
         break
