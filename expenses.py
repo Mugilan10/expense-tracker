@@ -44,11 +44,13 @@ while True:
         name = input("Name: ")
         amount = input("Amount: ")
         category = input("Category: ")
-        add_expense(name, float(amount), category)
-        print("Added.")
-
-        with open("expenses.json","w") as f:
-            json.dump(expenses, f)
+        try:
+            add_expense(name, float(amount), category)
+            print("Added.")
+            with open("expenses.json","w") as f:
+                json.dump(expenses, f)
+        except ValueError:
+            print("Invalid amount, please enter a number")
     
     elif choice == "2":
         show_summary()
